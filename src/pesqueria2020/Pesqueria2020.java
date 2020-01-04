@@ -11,8 +11,17 @@ package pesqueria2020;
  * @author Yonatan Daniel Guala Oyarzo
  */
 import java.io.*;
+import java.util.Random;
 
 public class Pesqueria2020 {
+
+//	****	main	****
+	public static void main(String[] args) {
+		// TODO code application logic here
+		Pesqueria2020 p = new Pesqueria2020();
+		p.inici();
+	}
+	
 	
 //	El inicio del programa presenta el menu y recoge el input del jugador
 	private void inici() {
@@ -162,7 +171,7 @@ public class Pesqueria2020 {
 	
 	private void borrarUsuario(String usuari){
 	
-			File u = new File("usuaris.txt");
+		File u = new File("usuaris.txt");
 		File a = new File("auxiliar.txt");
 
 		try (
@@ -201,8 +210,10 @@ public class Pesqueria2020 {
 		File u = new File("usuaris.txt");
 		try(
 			FileReader f = new FileReader(u);
-			BufferedReader br = new BufferedReader(f);) {
-			
+			BufferedReader br = new BufferedReader(f);) 
+		
+		{
+		
 			String s = br.readLine();
 			while (s != null){
 			if (s.equals(usuari)){
@@ -218,7 +229,7 @@ public class Pesqueria2020 {
 			System.out.println("l'usuari " + usuari + " no existeix");
 			return false;
 			
-			} catch (Exception e) {
+		} catch (Exception e) {
 			System.out.println("error custom : " + e);
 		}
 		return true;
@@ -245,6 +256,7 @@ public class Pesqueria2020 {
 
 		while (pesqueria != 's') {
 			pesqueria = menuPescar();
+			String fichero = "";
 
 //	    una vez el jugador elige la opción deseada procesamos el input y realizamos la acción correspondiente
 			switch (pesqueria) {
@@ -252,15 +264,18 @@ public class Pesqueria2020 {
 				case 'a':
 					System.out.println("Hola " + usuari + " vas a pescar al Mar Mediterrani");
 					System.out.println("---------------");
-					tirarLaCaña(usuari,pesqueria);
-					
-					
-					pesqueria = 's';
+					fichero = "mediterrani.txt";
+					tirarLaCaña(usuari,fichero);
+										
+					//pesqueria = 's';
 					break;
 				case 'b':
 					System.out.println("Hola " + usuari + " vas a pescar a la Costa de Florida");
 					System.out.println("---------------");
-					pesqueria = 's';
+					fichero = "florida.txt";
+					tirarLaCaña(usuari,fichero);
+					
+					//pesqueria = 's';
 					break;
 				case 's':
 					System.out.println(" Bye!!!");
@@ -294,17 +309,41 @@ public class Pesqueria2020 {
 	return pesqueria;
 	}
 
+//	Generar número aleatorio
+	
+	public double randGenerator(){
+	Random r = new Random(); 
+        System.out.println(r);
+	double d = r.nextDouble(); // número aleatorio entre 0 y 1
+        System.out.println(d);
+	
+	return d;
+	}
 //	Tirar la Caña
 	
-	private void tirarLaCaña(String usuari, char pesqueria){
-		System.out.println("Usuario " + usuari +" está pescando en " + pesqueria + " y ha pescado ");
+	private void tirarLaCaña(String usuari, String fichero){
 		
+		double n = randGenerator();
+		
+		File p = new File(fichero);
+		try(
+			FileReader f = new FileReader(p);
+			BufferedReader br = new BufferedReader(f);) 
+		{
+		
+			String s = br.readLine();
+			while (s != null){
+			System.out.println(s);
+			s = br.readLine();
+     
+			}
+			br.close();
+			f.close();
+			
+		} catch (Exception e) {
+			System.out.println("error custom : " + e);
+		}
+		
+		System.out.println("Usuario " + usuari +" está pescando en " + fichero + " y ha pescado ");
 	}
-//	****	main	****
-	public static void main(String[] args) {
-		// TODO code application logic here
-		Pesqueria2020 p = new Pesqueria2020();
-		p.inici();
-	}
-	
 }
